@@ -1,10 +1,13 @@
 package com.example.tourservice;
 
+import org.springframework.stereotype.Repository;
+
 /**
  * The Tour contains all attributes of an Explore California Tour.
  *
  * Created by Mary Ellen Bowman
  */
+
 public record Tour(String title, Integer price, Boolean kidFriendly) {
   @Override
   public String toString() {
