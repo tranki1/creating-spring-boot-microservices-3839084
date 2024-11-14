@@ -15,6 +15,8 @@ import com.example.explorecalijpa.model.Difficulty;
 import com.example.explorecalijpa.model.Region;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.core.io.ClassPathResource;
+import java.io.InputStream;
 
 @SpringBootApplication
 public class ExplorecaliJpaApplication implements CommandLineRunner {
@@ -37,7 +39,7 @@ public class ExplorecaliJpaApplication implements CommandLineRunner {
         System.out.println("Persisted Packages = " + tourPackageService.total());
         createToursFromFile(TOUR_IMPORT_FILE);
         System.out.println("Persisted Tours = " + tourService.total());
-       
+
         /********* CHALLENGES **********/
         // System.out.println("\n\nEasy Tours");
         // tourService.lookupByDifficulty(Difficulty.Easy).forEach(System.out::println);
@@ -50,7 +52,7 @@ public class ExplorecaliJpaApplication implements CommandLineRunner {
      * Iterate through all of the tour packages, print the tour package name and
      * for each tour package lookup all tours and print the name and
      * description of the tour.
-     * 
+     *
      */
     private void printToursChallenge() {
 
@@ -92,12 +94,11 @@ public class ExplorecaliJpaApplication implements CommandLineRunner {
      * Helper to import ExploreCali.json
      */
     record TourFromFile(String packageName, String title, String description,
-            String blurb, Integer price, String length, String bullets,
-            String keywords, String difficulty, String region) {
+                        String blurb, Integer price, String length, String bullets,
+                        String keywords, String difficulty, String region) {
         static List<TourFromFile> read(String fileToImport) throws IOException {
-            return new ObjectMapper().readValue(new File(fileToImport),
-                    new TypeReference<List<TourFromFile>>() {
-                    });
+            InputStream inputStream = new ClassPathResource(fileToImport).getInputStream();
+            return new ObjectMapper().readValue(inputStream, new TypeReference<List<TourFromFile>>() {});
         }
     }
 }
