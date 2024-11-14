@@ -2,6 +2,8 @@ package com.example.explorecalijpa.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 
 /**
@@ -21,12 +23,17 @@ public class TourRating {
   @JoinColumn(name = "tour_id")
   private Tour tour;
 
+  @Getter
   @Column(name = "customer_id")
   private Integer customerId;
 
+  @Setter
+  @Getter
   @Column(nullable = false)
   private Integer score;
 
+  @Setter
+  @Getter
   @Column
   private String comment;
 
